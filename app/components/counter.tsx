@@ -5,13 +5,19 @@ import { Flex, Button, Text, Input } from '@chakra-ui/react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import {
 	decrement,
+	decrementByAmount,
 	increment,
 	incrementByAmount,
 } from '../state/counter/counterSlice';
 
 const Counter = () => {
 	const count = useSelector((state: RootState) => state.counter.value);
+	const [amount, setAmount] = React.useState('');
 	const dispatch = useDispatch();
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		{Number.isInteger(parseInt(e.target.value)) ? setAmount(e.target.value) : setAmount('')}
+	}
 	return (
 		<Flex gap='20px' direction='column' alignItems='center'>
 			<Flex gap='10px'>
@@ -38,7 +44,7 @@ const Counter = () => {
 				</Text>
 				<Button
 					rightIcon={<FaPlus />}
-					onClick={() => dispatch(incrementByAmount(100))}
+					onClick={() => dispatch(increment())}
 					colorScheme='orange'
 				>
 					Increment
@@ -47,8 +53,10 @@ const Counter = () => {
 			<Flex gap='10px'>
 				<Button
 					leftIcon={<FaMinus />}
-					onClick={() => dispatch(decrement())}
-					colorScheme='orange'
+					onClick={() =>
+						dispatch(decrementByAmount(parseInt(amount ? amount : '0')))
+					}
+					colorScheme='purple'
 				>
 					Decrement
 				</Button>
@@ -59,6 +67,8 @@ const Counter = () => {
 					fontSize='24px'
 					fontWeight='bold'
 					textAlign='center'
+					value={amount}
+					onChange={e => handleInputChange(e)}
 					_placeholder={{
 						fontsize: '12px',
 						fontWeight: '400',
@@ -67,8 +77,10 @@ const Counter = () => {
 				/>
 				<Button
 					rightIcon={<FaPlus />}
-					onClick={() => dispatch(incrementByAmount(100))}
-					colorScheme='orange'
+					onClick={() =>
+						dispatch(incrementByAmount(parseInt(amount ? amount : '0')))
+					}
+					colorScheme='purple'
 				>
 					Increment
 				</Button>

@@ -28,12 +28,13 @@ const Navbar = () => {
 				<IconButton
 					aria-label='dark mode'
 					onClick={toggleColorMode}
-					bg='transparent'
+          colorScheme='transparent'
+					// bg='transparent'
 					icon={
 						colorMode === 'light' ? (
-							<MdDarkMode size='36px' />
+							<MdDarkMode size='36px' color='slate' />
 						) : (
-							<FaSun size='28px' />
+							<FaSun size='28px' color='yellow' />
 						)
 					}
 				/>

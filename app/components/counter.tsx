@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../state/store';
-import { Flex, Button, Text, Input } from '@chakra-ui/react';
+import { Flex, Button, Text, Input, useToast } from '@chakra-ui/react';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import {
 	decrement,
@@ -14,10 +14,14 @@ const Counter = () => {
 	const count = useSelector((state: RootState) => state.counter.value);
 	const [amount, setAmount] = React.useState('');
 	const dispatch = useDispatch();
-
+	const toast = useToast();
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		{Number.isInteger(parseInt(e.target.value)) ? setAmount(e.target.value) : setAmount('')}
-	}
+		{
+			Number.isInteger(parseInt(e.target.value))
+				? setAmount(e.target.value)
+				: setAmount('');
+		}
+	};
 	return (
 		<Flex gap='20px' direction='column' alignItems='center'>
 			<Flex gap='10px'>
@@ -55,9 +59,16 @@ const Counter = () => {
 			<Flex gap='10px'>
 				<Button
 					leftIcon={<FaMinus />}
-					onClick={() =>
-						dispatch(decrementByAmount(parseInt(amount ? amount : '0')))
-					}
+					onClick={() => {
+						dispatch(decrementByAmount(parseInt(amount ? amount : '0')));
+						toast({
+							title: 'Decremented.',
+							description: `Count has been decremented by ${amount}.`,
+							status: 'success',
+							duration: 1000,
+							isClosable: true,
+						});
+					}}
 					colorScheme='purple'
 				>
 					Decrement
@@ -79,9 +90,16 @@ const Counter = () => {
 				/>
 				<Button
 					rightIcon={<FaPlus />}
-					onClick={() =>
-						dispatch(incrementByAmount(parseInt(amount ? amount : '0')))
-					}
+					onClick={() => {
+						dispatch(incrementByAmount(parseInt(amount ? amount : '0')));
+						toast({
+							title: 'Incremented.',
+							description: `Count has been incremented by ${amount}.`,
+							status: 'success',
+							duration: 1000,
+							isClosable: true,
+						});
+					}}
 					colorScheme='purple'
 				>
 					Increment

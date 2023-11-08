@@ -30,9 +30,11 @@ const Counter = () => {
 				</Button>
 				<Text
 					px='10px'
+					minW='150px'
 					fontSize='24px'
 					fontWeight='bold'
-					w='100px'
+					alignItems='center'
+					justifyContent='center'
 					bgColor='slategray'
 					border='1px solid'
 					borderRadius='8px'
